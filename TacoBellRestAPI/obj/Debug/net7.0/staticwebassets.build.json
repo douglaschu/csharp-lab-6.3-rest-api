@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "tH3ZZhpRQroNctykUatHkn6W6pE9KLeL7ZGhW+aVXN4=",
+  "Source": "TacoBellRestAPI",
+  "BasePath": "_content/TacoBellRestAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -14,42 +14,50 @@ namespace TacoBellRestAPI.Controllers
     {
         private TacoBellDbContext dbContext = new TacoBellDbContext();
 
+        //api/burrito
+        [HttpGet]
         public List<Burrito> GetBurritos()
         {
             return dbContext.Burritos.ToList();
         }
 
-        [HttpGet]
+        [HttpGet("{Id}")]
+        public Burrito GetById(int Id)
+        {
+            return dbContext.Burritos.FirstOrDefault(b => b.Id == Id);
+        }
+
+        //api/burritos/vegetarian
+        [HttpGet("vegetarian")]
         public List<Burrito> GetVegetarianBurritos()
         {
             List<Burrito> result = dbContext.Burritos.Where(b => b.Bean == true).ToList();
             return result;
         }
 
-
-        //api/Taco?name=BajaBlastTaco&cost=1.25&false&true
         [HttpPost]
-        public Taco AddTaco(string name, float cost, bool softshell, bool dorito)
+        public Burrito AddBurrito(string name, float cost, bool bean)
         {
-            Taco newTaco = new Taco();
-            newTaco.Name = name;
-            newTaco.Cost = cost;
-            newTaco.SoftShell = softshell;
-            newTaco.Dorito = dorito;
+            Burrito newBurrito = new Burrito();
+            newBurrito.Name = name;
+            newBurrito.Cost = cost;
+            newBurrito.Bean = bean;
+            dbContext.Burritos.Add(newBurrito);
+            dbContext.SaveChanges();
 
-            return newTaco;
+            return newBurrito;
         }
 
         //api/Burrito/Delete/1
         //custom route name + variable plugin
-        [HttpDelete("Delete/{Id}")]
-        public Taco DeleteTaco(int Id)
+        [HttpDelete("{Id}")]
+        public Burrito DeleteBurrito(int Id)
         {
-            Taco t = dbContext.Tacos.FirstOrDefault(t => t.Id == Id);
-            dbContext.Tacos.Remove(t);
+            Burrito b = dbContext.Burritos.FirstOrDefault(b => b.Id == Id);
+            dbContext.Burritos.Remove(b);
             dbContext.SaveChanges();
 
-            return t;
+            return b;
         }
 
         //Patch to update age

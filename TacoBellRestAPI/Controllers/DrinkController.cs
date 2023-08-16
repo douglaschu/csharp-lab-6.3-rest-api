@@ -18,10 +18,16 @@ namespace TacoBellRestAPI.Controllers
         public List<Drink> GetDrinks()
         {
             return dbContext.Drinks.ToList();
-
         }
 
-        [HttpGet]
+        [HttpGet("{Id}")]
+        public Drink GetById(int Id)
+        {
+            return dbContext.Drinks.FirstOrDefault(d => d.Id == Id);
+        }
+
+        //api/Drink/Slushies
+        [HttpGet("slushies")]
         public List<Drink> GetSlushies()
         {
             List<Drink> result = dbContext.Drinks.Where(d => d.Slushie == true).ToList();

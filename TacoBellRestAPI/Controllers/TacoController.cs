@@ -21,7 +21,13 @@ namespace TacoBellRestAPI.Controllers
             return dbContext.Tacos.ToList();
         }
 
-        [HttpGet]
+        [HttpGet("{Id}")]
+        public Taco GetById(int Id)
+        {
+            return dbContext.Tacos.FirstOrDefault(t => t.Id == Id);
+        }
+
+        [HttpGet("loco")]
         public List<Taco> GetDoritosLocos()
         {
             List<Taco> result = dbContext.Tacos.Where(t => t.Dorito == true).ToList();
@@ -37,13 +43,15 @@ namespace TacoBellRestAPI.Controllers
             newTaco.Cost = cost;
             newTaco.SoftShell = softshell;
             newTaco.Dorito = dorito;
+            dbContext.Tacos.Add(newTaco);
+            dbContext.SaveChanges();
 
             return newTaco;
         }
 
         //api/Taco/Delete/1
         //custom route name + variable plugin
-        [HttpDelete("Delete/{Id}")]
+        [HttpDelete("{Id}")]
         public Taco DeleteTaco(int Id)
         {
             Taco t = dbContext.Tacos.FirstOrDefault(t => t.Id == Id);
@@ -64,7 +72,6 @@ namespace TacoBellRestAPI.Controllers
             dbContext.SaveChanges();
 
             return t;
-
         }
 
     }
